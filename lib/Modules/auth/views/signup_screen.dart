@@ -48,7 +48,7 @@ class _SignupPageState extends State<SignupPage> {
 
     // Navigate to home on success
     if (mounted) {
-      context.go(RouteNames.home);
+      context.go(RouteNames.navbar);
     }
   }
 

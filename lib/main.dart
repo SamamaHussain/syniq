@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:syniq/Modules/Home/view/screens/home_screen.dart';
+import 'package:syniq/Core/themes/app_theme.dart';
+import 'package:syniq/Routes/app_router.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,13 +11,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'Syniq',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: const HomePage(),
+
+      // 👇 GoRouter config
+      routerConfig: AppRouter.router,
+
+      theme: AppTheme.lightTheme,
     );
   }
 }

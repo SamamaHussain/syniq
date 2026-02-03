@@ -36,7 +36,7 @@ class _LoginPageState extends State<LoginPage> {
 
     // Navigate to home on success
     if (mounted) {
-      context.go(RouteNames.home);
+      context.go(RouteNames.navbar);
     }
   }
 

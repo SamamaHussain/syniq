@@ -8,6 +8,7 @@ class RouteNames {
   static const String forgotPassword = '/forgot-password';
 
   // Main App Routes
+  static const String navbar = '/navbar';
   static const String home = '/home';
   static const String dashboard = '/dashboard';
   static const String upload = '/upload';

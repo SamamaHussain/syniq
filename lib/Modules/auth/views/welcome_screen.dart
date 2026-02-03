@@ -108,7 +108,7 @@ class WelcomePage extends StatelessWidget {
                   TextButton(
                     onPressed: () {
                       // Skip for now / guest access
-                      context.go(RouteNames.home);
+                      context.go(RouteNames.navbar);
                     },
                     child: Text(
                       'Continue as Guest',

@@ -1,5 +1,6 @@
 // lib/presentation/router/app_router.dart
 import 'package:go_router/go_router.dart';
+import 'package:syniq/Modules/Home/view/screens/bottom_nav_bar.dart';
 import 'package:syniq/Modules/Home/view/screens/home_screen.dart';
 import 'package:syniq/Modules/Job%20Description/job_decs_screen.dart';
 import 'package:syniq/Modules/analyzer/all_services_screen.dart';
@@ -16,7 +17,7 @@ class AppRouter {
   // Make router globally accessible
   static final GoRouter router = GoRouter(
     debugLogDiagnostics: true,
-    initialLocation: RouteNames.welcome,
+    initialLocation: RouteNames.splash,
     routes: [
       // Splash Screen (Initial Route)
       GoRoute(
@@ -46,7 +47,12 @@ class AppRouter {
       GoRoute(
         path: RouteNames.home,
         name: 'home',
-        builder: (context, state) => const HomePage(),
+        builder: (context, state) => const HomeScreen(),
+      ),
+      GoRoute(
+        path: RouteNames.navbar,
+        name: 'navbar',
+        builder: (context, state) => const FloatingNavigation(),
       ),
       GoRoute(
         path: RouteNames.settings,
