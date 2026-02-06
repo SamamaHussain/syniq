@@ -246,7 +246,7 @@ class _LoginPageState extends State<LoginPage> {
                           // TODO: Implement Google sign in
                         },
                         icon: Image.asset(
-                          'assets/icons/google.png',
+                          'assets/images/google_logo.png',
                           width: 24,
                           height: 24,
                         ),
