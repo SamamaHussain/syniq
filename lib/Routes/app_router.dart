@@ -6,6 +6,7 @@ import 'package:syniq/Modules/Job%20Description/job_decs_screen.dart';
 import 'package:syniq/Modules/analyzer/all_services_screen.dart';
 import 'package:syniq/Modules/analyzer/analyze_screen.dart';
 import 'package:syniq/Modules/analyzer/score_screen.dart';
+import 'package:syniq/Modules/analyzer/upload_screen.dart';
 import 'package:syniq/Modules/auth/views/splash_screen.dart';
 import 'package:syniq/Modules/auth/views/welcome_screen.dart';
 import 'package:syniq/Modules/auth/views/login_screen.dart';
@@ -78,6 +79,11 @@ class AppRouter {
         path: RouteNames.score,
         name: 'score',
         builder: (context, state) => const ScorePage(),
+      ),
+      GoRoute(
+        path: RouteNames.upload,
+        name: 'upload',
+        builder: (context, state) => const UploadScreen(),
       ),
     ],
   );

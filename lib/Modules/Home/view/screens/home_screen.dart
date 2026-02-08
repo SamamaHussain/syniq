@@ -1,6 +1,7 @@
 // lib/modules/home/view/screens/home_screen.dart
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:syniq/core/themes/app_colors.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -8,7 +9,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
+      backgroundColor: AppColors.primaryBg,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
@@ -20,16 +21,12 @@ class HomeScreen extends StatelessWidget {
                 _buildWelcomeHeader(context),
                 const SizedBox(height: 32),
 
-                // Quick Stats
-                _buildQuickStats(context),
-                const SizedBox(height: 32),
-
                 // Main Features Grid
                 _buildFeaturesGrid(context),
                 const SizedBox(height: 32),
 
-                // Recent Activity
-                _buildRecentActivity(context),
+                // Quick Stats
+                _buildQuickStats(context),
               ],
             ),
           ),
@@ -49,125 +46,45 @@ class HomeScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Good Morning,',
-                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    color: Theme.of(
-                      context,
-                    ).colorScheme.onSurface.withOpacity(0.7),
+                  'Welcome back,',
+                  style: TextStyle(
+                    color: AppColors.black.withOpacity(0.7),
+                    fontSize: 16,
                   ),
                 ),
-                Text(
-                  'Alex!', // TODO: Replace with actual user name
-                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
+                const SizedBox(height: 4),
+                const Text(
+                  'Alex', // TODO: Replace with actual user name
+                  style: TextStyle(
+                    color: AppColors.black,
+                    fontSize: 28,
+                    fontWeight: FontWeight.w700,
                   ),
                 ),
               ],
             ),
             CircleAvatar(
-              radius: 25,
-              backgroundColor: Theme.of(
-                context,
-              ).colorScheme.primary.withOpacity(0.1),
-              child: Icon(
-                Icons.person,
-                size: 30,
-                color: Theme.of(context).colorScheme.primary,
-              ),
+              radius: 24,
+              backgroundColor: AppColors.accent1.withOpacity(0.2),
+              child: Icon(Icons.person, color: AppColors.accent1, size: 26),
             ),
           ],
         ),
-        const SizedBox(height: 8),
-        Text(
-          'Ready to optimize your resume with AI?',
-          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-            color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildQuickStats(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            Theme.of(context).colorScheme.primary.withOpacity(0.1),
-            Theme.of(context).colorScheme.secondary.withOpacity(0.1),
-          ],
-        ),
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          _buildStatItem(
-            context,
-            count: '3',
-            label: 'Resumes\nAnalyzed',
-            icon: Icons.description_outlined,
-          ),
-          _buildStatItem(
-            context,
-            count: '92%',
-            label: 'Average\nScore',
-            icon: Icons.trending_up_outlined,
-          ),
-          _buildStatItem(
-            context,
-            count: '15',
-            label: 'Improvement\nTips',
-            icon: Icons.lightbulb_outline,
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildStatItem(
-    BuildContext context, {
-    required String count,
-    required String label,
-    required IconData icon,
-  }) {
-    return Column(
-      children: [
+        const SizedBox(height: 12),
         Container(
-          padding: const EdgeInsets.all(12),
+          width: double.infinity,
+          padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
-            color: Colors.white,
-            shape: BoxShape.circle,
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.05),
-                blurRadius: 10,
-                offset: const Offset(0, 4),
-              ),
-            ],
+            color: AppColors.accent2,
+            borderRadius: BorderRadius.circular(16),
           ),
-          child: Icon(
-            icon,
-            color: Theme.of(context).colorScheme.primary,
-            size: 24,
-          ),
-        ),
-        const SizedBox(height: 8),
-        Text(
-          count,
-          style: Theme.of(
-            context,
-          ).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(height: 4),
-        Text(
-          label,
-          textAlign: TextAlign.center,
-          style: Theme.of(context).textTheme.bodySmall?.copyWith(
-            color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
+          child: Text(
+            'Ready to optimize your resume with AI?',
+            style: TextStyle(
+              color: AppColors.black.withOpacity(0.8),
+              fontSize: 15,
+              fontWeight: FontWeight.w500,
+            ),
           ),
         ),
       ],
@@ -180,67 +97,55 @@ class HomeScreen extends StatelessWidget {
       children: [
         Text(
           'Quick Actions',
-          style: Theme.of(
-            context,
-          ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+          style: TextStyle(
+            color: AppColors.black,
+            fontSize: 22,
+            fontWeight: FontWeight.w700,
+          ),
         ),
-        const SizedBox(height: 16),
+        const SizedBox(height: 20),
         GridView.count(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           crossAxisCount: 2,
           crossAxisSpacing: 16,
           mainAxisSpacing: 16,
-          childAspectRatio: 1.1,
+          childAspectRatio: 1.2,
           children: [
             // Feature 1: Resume Upload & Parsing
             _buildFeatureCard(
-              context,
-              title: 'Resume Upload & Parsing',
-              subtitle: 'Auto text extraction and section detection',
+              title: 'Upload Resume',
+              subtitle: 'Auto text extraction',
               icon: Icons.upload_file,
-              gradient: const [Color(0xFF6C63FF), Color(0xFF3A7BD5)],
-              onTap: () {
-                // Navigate to upload screen
-                context.push('/upload');
-              },
+              color: AppColors.accent1,
+              onTap: () => context.push('/upload'),
             ),
 
             // Feature 2: AI Summary Generation
             _buildFeatureCard(
-              context,
-              title: 'AI Summary Generation',
-              subtitle: 'One-paragraph professional summary',
+              title: 'AI Summary',
+              subtitle: 'Professional summary',
               icon: Icons.auto_awesome,
-              gradient: const [Color(0xFF36D1DC), Color(0xFF5B86E5)],
-              onTap: () {
-                // Navigate to summary generation screen
-                context.push('/ai-summary');
-              },
+              color: AppColors.secondaryBg,
+              onTap: () => context.push('/ai-summary'),
             ),
 
             // Feature 3: Resume Analysis
             _buildFeatureCard(
-              context,
               title: 'Resume Analysis',
-              subtitle: 'Get detailed feedback and scores',
+              subtitle: 'Get detailed feedback',
               icon: Icons.analytics,
-              gradient: const [Color(0xFFFF6B6B), Color(0xFFFF8E53)],
-              onTap: () {
-                context.push('/analysis');
-              },
+              color: AppColors.accent2,
+              onTap: () => context.push('/analysis'),
             ),
 
             // Feature 4: Job Matching
             _buildFeatureCard(
-              context,
-              title: 'Job Matching',
-              subtitle: 'Find roles that fit your resume',
+              title: 'Job Match',
+              subtitle: 'Find matching roles',
               icon: Icons.work_outline,
-              gradient: const [Color(0xFF7F00FF), Color(0xFFE100FF)],
-              onTap: () {
-                context.push('/job-matching');
-              },
+              color: AppColors.accent1,
+              onTap: () => context.push('/job-matching'),
             ),
           ],
         ),
@@ -248,31 +153,19 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildFeatureCard(
-    BuildContext context, {
+  Widget _buildFeatureCard({
     required String title,
     required String subtitle,
     required IconData icon,
-    required List<Color> gradient,
+    required Color color,
     required VoidCallback onTap,
   }) {
     return GestureDetector(
       onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
+          color: color,
           borderRadius: BorderRadius.circular(20),
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: gradient,
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: gradient[0].withOpacity(0.3),
-              blurRadius: 15,
-              offset: const Offset(0, 8),
-            ),
-          ],
         ),
         child: Padding(
           padding: const EdgeInsets.all(20),
@@ -283,29 +176,31 @@ class HomeScreen extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.2),
-                  shape: BoxShape.circle,
+                  color: Colors.white.withOpacity(0.3),
+                  borderRadius: BorderRadius.circular(12),
                 ),
-                child: Icon(icon, color: Colors.white, size: 28),
+                child: Icon(icon, color: AppColors.black, size: 24),
               ),
-              const SizedBox(height: 16),
-              Text(
-                title,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              const SizedBox(height: 4),
-              Text(
-                subtitle,
-                style: TextStyle(
-                  color: Colors.white.withOpacity(0.9),
-                  fontSize: 12,
-                ),
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: const TextStyle(
+                      color: AppColors.black,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    subtitle,
+                    style: TextStyle(
+                      color: AppColors.black.withOpacity(0.7),
+                      fontSize: 12,
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
@@ -314,124 +209,80 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildRecentActivity(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              'Recent Activity',
-              style: Theme.of(
-                context,
-              ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+  Widget _buildQuickStats(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: AppColors.secondaryBg,
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Your Stats',
+            style: TextStyle(
+              color: AppColors.black,
+              fontSize: 22,
+              fontWeight: FontWeight.w700,
             ),
-            TextButton(
-              onPressed: () {
-                context.push('/activity');
-              },
-              child: Text(
-                'View All',
-                style: TextStyle(color: Theme.of(context).colorScheme.primary),
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 16),
-        Container(
-          padding: const EdgeInsets.all(20),
-          decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.surface,
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.05),
-                blurRadius: 10,
-                offset: const Offset(0, 4),
-              ),
-            ],
           ),
-          child: Column(
+          const SizedBox(height: 20),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              _buildActivityItem(
-                context,
-                title: 'Software Engineer Resume',
-                subtitle: 'Score improved from 78% to 92%',
-                time: '2 hours ago',
-                icon: Icons.thumb_up,
-                color: Colors.green,
+              _buildStatItem(
+                count: '3',
+                label: 'Resumes',
+                icon: Icons.description_outlined,
               ),
-              const Divider(height: 30),
-              _buildActivityItem(
-                context,
-                title: 'Marketing Analyst Summary',
-                subtitle: 'AI summary generated successfully',
-                time: 'Yesterday',
-                icon: Icons.auto_awesome,
-                color: Colors.blue,
+              _buildStatItem(
+                count: '92%',
+                label: 'Avg Score',
+                icon: Icons.trending_up_outlined,
               ),
-              const Divider(height: 30),
-              _buildActivityItem(
-                context,
-                title: 'Project Manager Resume',
-                subtitle: '3 new improvement suggestions',
-                time: '2 days ago',
-                icon: Icons.lightbulb,
-                color: Colors.orange,
+              _buildStatItem(
+                count: '15',
+                label: 'Tips',
+                icon: Icons.lightbulb_outline,
               ),
             ],
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
-  Widget _buildActivityItem(
-    BuildContext context, {
-    required String title,
-    required String subtitle,
-    required String time,
+  Widget _buildStatItem({
+    required String count,
+    required String label,
     required IconData icon,
-    required Color color,
   }) {
-    return Row(
+    return Column(
       children: [
         Container(
           padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
-            color: color.withOpacity(0.1),
+            color: AppColors.primaryBg,
             shape: BoxShape.circle,
           ),
-          child: Icon(icon, color: color, size: 20),
+          child: Icon(icon, color: AppColors.black, size: 20),
         ),
-        const SizedBox(width: 16),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                title,
-                style: Theme.of(
-                  context,
-                ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
-              ),
-              const SizedBox(height: 4),
-              Text(
-                subtitle,
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: Theme.of(
-                    context,
-                  ).colorScheme.onSurface.withOpacity(0.6),
-                ),
-              ),
-            ],
+        const SizedBox(height: 8),
+        Text(
+          count,
+          style: const TextStyle(
+            color: AppColors.black,
+            fontSize: 18,
+            fontWeight: FontWeight.w700,
           ),
         ),
+        const SizedBox(height: 4),
         Text(
-          time,
-          style: Theme.of(context).textTheme.bodySmall?.copyWith(
-            color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5),
+          label,
+          style: TextStyle(
+            color: AppColors.black.withOpacity(0.6),
+            fontSize: 12,
           ),
         ),
       ],
