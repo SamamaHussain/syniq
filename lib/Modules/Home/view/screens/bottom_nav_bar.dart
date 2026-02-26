@@ -2,7 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
 import 'package:syniq/Modules/Home/view/screens/home_screen.dart';
-import 'package:syniq/Modules/settings/settings_screen.dart';
+import 'package:syniq/Modules/Home/view/screens/insights_screen.dart';
+import 'package:syniq/modules/settings/settings_screen.dart';
 
 class FloatingNavigation extends StatelessWidget {
   const FloatingNavigation({super.key});
@@ -31,7 +32,7 @@ class FloatingNavigation extends StatelessWidget {
   }
 
   List<Widget> _buildScreens() {
-    return [const HomeScreen(), const SettingsPage(), const SettingsPage()];
+    return [const HomeScreen(), const SettingsPage(), const InsightsScreen()];
   }
 
   List<PersistentBottomNavBarItem> _navBarsItems() {

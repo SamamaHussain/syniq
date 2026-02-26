@@ -13,6 +13,7 @@ class RouteNames {
   static const String dashboard = '/dashboard';
   static const String upload = '/upload';
   static const String settings = '/settings';
+  static const String insights = '/insights';
 
   static const String jobDesc = '/job-desc';
 

@@ -2,6 +2,7 @@
 import 'package:go_router/go_router.dart';
 import 'package:syniq/Modules/Home/view/screens/bottom_nav_bar.dart';
 import 'package:syniq/Modules/Home/view/screens/home_screen.dart';
+import 'package:syniq/Modules/Home/view/screens/insights_screen.dart';
 import 'package:syniq/Modules/Job%20Description/job_decs_screen.dart';
 import 'package:syniq/Modules/analyzer/all_services_screen.dart';
 import 'package:syniq/Modules/analyzer/analyze_screen.dart';
@@ -11,8 +12,8 @@ import 'package:syniq/Modules/auth/views/splash_screen.dart';
 import 'package:syniq/Modules/auth/views/welcome_screen.dart';
 import 'package:syniq/Modules/auth/views/login_screen.dart';
 import 'package:syniq/Modules/auth/views/signup_screen.dart';
-import 'package:syniq/Modules/settings/settings_screen.dart';
 import 'package:syniq/Routes/route_names.dart';
+import 'package:syniq/modules/settings/settings_screen.dart';
 
 class AppRouter {
   // Make router globally accessible
@@ -59,6 +60,11 @@ class AppRouter {
         path: RouteNames.settings,
         name: 'settings',
         builder: (context, state) => const SettingsPage(),
+      ),
+      GoRoute(
+        path: RouteNames.insights,
+        name: 'insights',
+        builder: (context, state) => const InsightsScreen(),
       ),
       GoRoute(
         path: RouteNames.jobDesc,
