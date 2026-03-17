@@ -3,17 +3,16 @@ import 'package:go_router/go_router.dart';
 import 'package:syniq/Modules/Home/view/screens/bottom_nav_bar.dart';
 import 'package:syniq/Modules/Home/view/screens/home_screen.dart';
 import 'package:syniq/Modules/Home/view/screens/insights_screen.dart';
+import 'package:syniq/Modules/Home/view/screens/settings_screen.dart';
 import 'package:syniq/Modules/Job%20Description/job_decs_screen.dart';
-import 'package:syniq/Modules/analyzer/all_services_screen.dart';
-import 'package:syniq/Modules/analyzer/analyze_screen.dart';
-import 'package:syniq/Modules/analyzer/score_screen.dart';
-import 'package:syniq/Modules/analyzer/upload_screen.dart';
+import 'package:syniq/Modules/analyzer/views/all_services_screen.dart';
+import 'package:syniq/Modules/analyzer/views/analyze_screen.dart';
+import 'package:syniq/Modules/analyzer/views/upload_screen.dart';
 import 'package:syniq/Modules/auth/views/splash_screen.dart';
 import 'package:syniq/Modules/auth/views/welcome_screen.dart';
 import 'package:syniq/Modules/auth/views/login_screen.dart';
 import 'package:syniq/Modules/auth/views/signup_screen.dart';
 import 'package:syniq/Routes/route_names.dart';
-import 'package:syniq/modules/settings/settings_screen.dart';
 
 class AppRouter {
   // Make router globally accessible
@@ -59,7 +58,7 @@ class AppRouter {
       GoRoute(
         path: RouteNames.settings,
         name: 'settings',
-        builder: (context, state) => const SettingsPage(),
+        builder: (context, state) => const SettingsScreen(),
       ),
       GoRoute(
         path: RouteNames.insights,
@@ -81,11 +80,11 @@ class AppRouter {
         name: 'analyzer',
         builder: (context, state) => const AnalyzerPage(),
       ),
-      GoRoute(
-        path: RouteNames.score,
-        name: 'score',
-        builder: (context, state) => const ScorePage(),
-      ),
+      // GoRoute(
+      //   path: RouteNames.score,
+      //   name: 'score',
+      //   builder: (context, state) => const ATSScoreScreen(),
+      // ),
       GoRoute(
         path: RouteNames.upload,
         name: 'upload',

@@ -2,7 +2,9 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:syniq/Modules/analyzer/views/ATS%20Score/score_screen.dart';
 import 'package:syniq/core/themes/app_colors.dart';
+import 'package:syniq/services/resume_text_extracter.dart';
 
 class UploadScreen extends StatefulWidget {
   const UploadScreen({super.key});
@@ -31,22 +33,37 @@ class _UploadScreenState extends State<UploadScreen> {
   }
 
   Future<void> _processResume() async {
-    if (_selectedFile == null) return;
+  if (_selectedFile == null) return;
 
-    setState(() {
-      _isUploading = true;
-    });
+  setState(() => _isUploading = true);
 
-    // Simulate processing
-    await Future.delayed(const Duration(seconds: 2));
+  try {
+    // Extract text from file
+    final resumeText = await ResumeTextExtractor.extractText(_selectedFile!);
 
-    setState(() {
-      _isUploading = false;
-    });
-
-    // Navigate to parsing result
-    // Navigator.push(context, MaterialPageRoute(builder: (_) => ParsingResultScreen()));
+    // Navigate to ATS Score screen with extracted text
+    if (mounted) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) => ATSScoreScreen(
+            resumeText: resumeText,
+            fileName: _fileName,
+          ),
+        ),
+      );
+    }
+  } catch (e) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Error extracting text: $e'),
+        backgroundColor: AppColors.error,
+      ),
+    );
+  } finally {
+    setState(() => _isUploading = false);
   }
+}
 
   @override
   Widget build(BuildContext context) {

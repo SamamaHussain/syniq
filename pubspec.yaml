@@ -39,6 +39,12 @@ dependencies:
   persistent_bottom_nav_bar: ^6.2.1
   file_picker: ^10.3.10
   intl: ^0.20.2
+  flutter_dotenv: ^6.0.0
+  equatable: ^2.0.8
+  google_generative_ai: ^0.4.7
+  path_provider: ^2.1.5
+  syncfusion_flutter_pdf: ^33.1.44
+  docx_to_text: ^1.0.1
 
 dev_dependencies:
   flutter_test:
@@ -65,6 +71,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/google_logo.png
+    - .env
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
