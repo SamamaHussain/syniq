@@ -5,6 +5,7 @@ import 'package:syniq/Modules/Home/view/screens/home_screen.dart';
 import 'package:syniq/Modules/Home/view/screens/insights_screen.dart';
 import 'package:syniq/Modules/Home/view/screens/settings_screen.dart';
 import 'package:syniq/Modules/Job%20Description/job_decs_screen.dart';
+import 'package:syniq/Modules/analyzer/views/ATS%20Score/score_screen.dart';
 import 'package:syniq/Modules/analyzer/views/all_services_screen.dart';
 import 'package:syniq/Modules/analyzer/views/analyze_screen.dart';
 import 'package:syniq/Modules/analyzer/views/upload_screen.dart';
@@ -80,11 +81,17 @@ class AppRouter {
         name: 'analyzer',
         builder: (context, state) => const AnalyzerPage(),
       ),
-      // GoRoute(
-      //   path: RouteNames.score,
-      //   name: 'score',
-      //   builder: (context, state) => const ATSScoreScreen(),
-      // ),
+      GoRoute(
+        path: RouteNames.score,
+        name: 'score',
+        builder: (context, state) {
+          // Extract parameters from state.extra
+          final args = state.extra as Map<String, dynamic>?;
+          final resumeText = args?['resumeText'] as String? ?? '';
+          final fileName = args?['fileName'] as String?;
+          return ATSScoreScreen(resumeText: resumeText, fileName: fileName);
+        },
+      ),
       GoRoute(
         path: RouteNames.upload,
         name: 'upload',

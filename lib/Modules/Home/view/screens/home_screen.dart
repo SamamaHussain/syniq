@@ -49,7 +49,7 @@ class HomeScreen extends StatelessWidget {
                   'Welcome back,',
                   style: TextStyle(
                     color: AppColors.black.withOpacity(0.7),
-                    fontSize: 16,
+                    fontSize: 18, // Increased from 16
                   ),
                 ),
                 const SizedBox(height: 4),
@@ -57,34 +57,27 @@ class HomeScreen extends StatelessWidget {
                   'Alex', // TODO: Replace with actual user name
                   style: TextStyle(
                     color: AppColors.black,
-                    fontSize: 28,
+                    fontSize: 32, // Increased from 28
                     fontWeight: FontWeight.w700,
                   ),
                 ),
               ],
             ),
             CircleAvatar(
-              radius: 24,
+              radius: 28, // Slightly bigger
               backgroundColor: AppColors.accent1.withOpacity(0.2),
-              child: Icon(Icons.person, color: AppColors.accent1, size: 26),
+              child: Icon(Icons.person, color: AppColors.accent1, size: 30),
             ),
           ],
         ),
         const SizedBox(height: 12),
-        Container(
-          width: double.infinity,
-          padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            color: AppColors.accent2,
-            borderRadius: BorderRadius.circular(16),
-          ),
-          child: Text(
-            'Ready to optimize your resume with AI?',
-            style: TextStyle(
-              color: AppColors.black.withOpacity(0.8),
-              fontSize: 15,
-              fontWeight: FontWeight.w500,
-            ),
+        // Removed yellow background container, now just a simple text
+        Text(
+          'Ready to optimize your resume with AI?',
+          style: TextStyle(
+            color: AppColors.black.withOpacity(0.8),
+            fontSize: 16, // Slightly bigger
+            fontWeight: FontWeight.w500,
           ),
         ),
       ],
@@ -99,7 +92,7 @@ class HomeScreen extends StatelessWidget {
           'Quick Actions',
           style: TextStyle(
             color: AppColors.black,
-            fontSize: 22,
+            fontSize: 24, // Increased from 22
             fontWeight: FontWeight.w700,
           ),
         ),
@@ -110,7 +103,8 @@ class HomeScreen extends StatelessWidget {
           crossAxisCount: 2,
           crossAxisSpacing: 16,
           mainAxisSpacing: 16,
-          childAspectRatio: 1.2,
+          // Adjusted aspect ratio to give more vertical space for text
+          childAspectRatio: 0.9,
           children: [
             // Feature 1: Resume Upload & Parsing
             _buildFeatureCard(
@@ -165,22 +159,23 @@ class HomeScreen extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           color: color,
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(12), // Reduced from 20
         ),
         child: Padding(
-          padding: const EdgeInsets.all(20),
+          padding: const EdgeInsets.all(16), // Slightly reduced padding
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
-                padding: const EdgeInsets.all(12),
+                padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
                   color: Colors.white.withOpacity(0.3),
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadius.circular(10),
                 ),
-                child: Icon(icon, color: AppColors.black, size: 24),
+                child: Icon(icon, color: AppColors.black, size: 22),
               ),
+              const SizedBox(height: 12),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -191,6 +186,8 @@ class HomeScreen extends StatelessWidget {
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
                     ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                   ),
                   const SizedBox(height: 4),
                   Text(
@@ -199,6 +196,8 @@ class HomeScreen extends StatelessWidget {
                       color: AppColors.black.withOpacity(0.7),
                       fontSize: 12,
                     ),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ],
               ),
@@ -214,7 +213,7 @@ class HomeScreen extends StatelessWidget {
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         color: AppColors.secondaryBg,
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(16), // Slightly reduced
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -223,13 +222,13 @@ class HomeScreen extends StatelessWidget {
             'Your Stats',
             style: TextStyle(
               color: AppColors.black,
-              fontSize: 22,
+              fontSize: 24, // Increased from 22
               fontWeight: FontWeight.w700,
             ),
           ),
           const SizedBox(height: 20),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly, // Better spacing
             children: [
               _buildStatItem(
                 count: '3',
@@ -261,19 +260,19 @@ class HomeScreen extends StatelessWidget {
     return Column(
       children: [
         Container(
-          padding: const EdgeInsets.all(10),
+          padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
             color: AppColors.primaryBg,
             shape: BoxShape.circle,
           ),
-          child: Icon(icon, color: AppColors.black, size: 20),
+          child: Icon(icon, color: AppColors.black, size: 24),
         ),
         const SizedBox(height: 8),
         Text(
           count,
           style: const TextStyle(
             color: AppColors.black,
-            fontSize: 18,
+            fontSize: 20,
             fontWeight: FontWeight.w700,
           ),
         ),
@@ -282,7 +281,7 @@ class HomeScreen extends StatelessWidget {
           label,
           style: TextStyle(
             color: AppColors.black.withOpacity(0.6),
-            fontSize: 12,
+            fontSize: 13,
           ),
         ),
       ],

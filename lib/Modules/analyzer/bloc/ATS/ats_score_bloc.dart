@@ -1,17 +1,19 @@
 import 'dart:convert';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:syniq/services/gemini_service.dart';
-import 'package:equatable/equatable.dart';
 
-part 'ats_score_state.dart';
-part 'ats_score_event.dart';
+import 'ats_score_event.dart';
+import 'ats_score_state.dart';
+
+export 'ats_score_event.dart';
+export 'ats_score_state.dart';
 
 class ATSScoreBloc extends Bloc<ATSScoreEvent, ATSScoreState> {
   final GeminiService _geminiService;
 
   ATSScoreBloc({required GeminiService geminiService})
     : _geminiService = geminiService,
-      super(ATSScoreInitial()) {
+      super(const ATSScoreInitial()) {
     on<AnalyzeResume>(_onAnalyzeResume);
     on<ResetATSScore>(_onReset);
   }
@@ -20,7 +22,7 @@ class ATSScoreBloc extends Bloc<ATSScoreEvent, ATSScoreState> {
     AnalyzeResume event,
     Emitter<ATSScoreState> emit,
   ) async {
-    emit(ATSScoreLoading());
+    emit(const ATSScoreLoading());
 
     try {
       final prompt = _buildPrompt(event.resumeText, event.jobDescription);
@@ -34,14 +36,21 @@ class ATSScoreBloc extends Bloc<ATSScoreEvent, ATSScoreState> {
 
   String _buildPrompt(String resumeText, String? jobDescription) {
     return '''
-You are an expert ATS (Applicant Tracking System) analyzer. Analyze the following resume and provide a detailed ATS score and feedback.
+You are an expert ATS (Applicant Tracking System) analyzer. You will receive a text document. Your task is to analyze it if it is a resume, or indicate that it is not a valid resume.
 
-Resume:
-$resumeText
-${jobDescription != null ? '\nJob Description:\n$jobDescription' : ''}
+First, determine if the provided text is a resume. A resume typically contains sections like Work Experience, Education, Skills, and possibly a summary. It is about an individual's professional background.
 
-Provide the analysis in JSON format with the following structure:
+If the text does NOT appear to be a resume (e.g., it is an article, random text, or something else), then return ONLY the following JSON structure:
 {
+  "isResume": false,
+  "message": "The provided document does not appear to be a resume. Please upload a valid resume file."
+}
+
+If the text IS a resume, then analyze it and provide an ATS score and feedback in the following JSON structure. For any fields that cannot be determined due to lack of information, use reasonable defaults (e.g., empty lists for strengths/improvements, a neutral score of 50 for categories, and a summary stating that the resume lacks sufficient detail).
+
+Valid resume analysis JSON structure:
+{
+  "isResume": true,
   "overallScore": 0-100,
   "categories": [
     {
@@ -71,12 +80,15 @@ Provide the analysis in JSON format with the following structure:
 }
 
 Return ONLY valid JSON, no other text.
+
+Resume text:
+$resumeText
+${jobDescription != null ? '\nJob Description:\n$jobDescription' : ''}
 ''';
   }
 
   ATSResult _parseResponse(String response) {
     try {
-      // Extract JSON from response (in case Gemini adds extra text)
       final jsonStr = _extractJson(response);
       final Map<String, dynamic> json = jsonDecode(jsonStr);
 
@@ -112,6 +124,6 @@ Return ONLY valid JSON, no other text.
   }
 
   void _onReset(ResetATSScore event, Emitter<ATSScoreState> emit) {
-    emit(ATSScoreInitial());
+    emit(const ATSScoreInitial());
   }
 }

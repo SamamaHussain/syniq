@@ -1,4 +1,4 @@
-part of 'ats_score_bloc.dart';
+import 'package:equatable/equatable.dart';
 
 abstract class ATSScoreEvent extends Equatable {
   const ATSScoreEvent();
@@ -17,4 +17,6 @@ class AnalyzeResume extends ATSScoreEvent {
   List<Object?> get props => [resumeText, jobDescription];
 }
 
-class ResetATSScore extends ATSScoreEvent {}
+class ResetATSScore extends ATSScoreEvent {
+  const ResetATSScore();
+}

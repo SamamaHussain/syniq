@@ -1,4 +1,4 @@
-part of 'ats_score_bloc.dart';
+import 'package:equatable/equatable.dart';
 
 abstract class ATSScoreState extends Equatable {
   const ATSScoreState();
@@ -7,9 +7,13 @@ abstract class ATSScoreState extends Equatable {
   List<Object?> get props => [];
 }
 
-class ATSScoreInitial extends ATSScoreState {}
+class ATSScoreInitial extends ATSScoreState {
+  const ATSScoreInitial();
+}
 
-class ATSScoreLoading extends ATSScoreState {}
+class ATSScoreLoading extends ATSScoreState {
+  const ATSScoreLoading();
+}
 
 class ATSScoreLoaded extends ATSScoreState {
   final ATSResult result;
@@ -29,9 +33,8 @@ class ATSScoreError extends ATSScoreState {
   List<Object?> get props => [message];
 }
 
-// ATS Result Model
 class ATSResult {
-  final int overallScore; // 0-100
+  final int overallScore;
   final List<ATSCategory> categories;
   final List<String> strengths;
   final List<String> improvements;
@@ -53,7 +56,7 @@ class ATSResult {
 
 class ATSCategory {
   final String name;
-  final int score; // 0-100
+  final int score;
   final String feedback;
 
   ATSCategory({

@@ -1,4 +1,6 @@
 // lib/Modules/ats_score/view/screens/ats_score_screen.dart
+import 'dart:developer' as dev;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:syniq/Core/themes/app_colors.dart';
@@ -6,23 +8,18 @@ import 'package:syniq/Modules/analyzer/bloc/ATS/ats_score_bloc.dart';
 import 'package:syniq/services/gemini_service.dart';
 import 'package:syniq/services/service_locator.dart';
 
-
 class ATSScoreScreen extends StatelessWidget {
   final String resumeText;
   final String? fileName;
 
-  const ATSScoreScreen({
-    super.key,
-    required this.resumeText,
-    this.fileName,
-  });
+  const ATSScoreScreen({super.key, required this.resumeText, this.fileName});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => ATSScoreBloc(
-        geminiService: ServiceLocator.get<GeminiService>(),
-      )..add(AnalyzeResume(resumeText: resumeText)),
+      create: (context) =>
+          ATSScoreBloc(geminiService: ServiceLocator.get<GeminiService>())
+            ..add(AnalyzeResume(resumeText: resumeText)),
       child: ATSScoreView(fileName: fileName),
     );
   }
@@ -67,7 +64,8 @@ class ATSScoreView extends StatelessWidget {
             } else if (state is ATSScoreLoaded) {
               return _buildResult(context, state.result);
             } else if (state is ATSScoreError) {
-              return _buildError(state.message);
+              dev.log(state.message);
+              return _buildError(state.message, context);
             }
             return const SizedBox();
           },
@@ -108,10 +106,7 @@ class ATSScoreView extends StatelessWidget {
           const SizedBox(height: 8),
           Text(
             fileName ?? 'Your resume',
-            style: TextStyle(
-              color: AppColors.textSecondary,
-              fontSize: 14,
-            ),
+            style: TextStyle(color: AppColors.textSecondary, fontSize: 14),
           ),
         ],
       ),
@@ -138,32 +133,37 @@ class ATSScoreView extends StatelessWidget {
           ],
           Text(
             'ATS Compatibility Score',
-            style: TextStyle(
-              color: AppColors.textSecondary,
-              fontSize: 14,
-            ),
+            style: TextStyle(color: AppColors.textSecondary, fontSize: 14),
           ),
           const SizedBox(height: 16),
 
           // Score Card
           Container(
-            padding: const EdgeInsets.all(24),
+            width: double.infinity,
+            padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 24),
             decoration: BoxDecoration(
               color: AppColors.secondaryBg,
-              borderRadius: BorderRadius.circular(24),
+              borderRadius: BorderRadius.circular(16),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.05),
+                  blurRadius: 20,
+                  offset: const Offset(0, 10),
+                ),
+              ],
             ),
             child: Column(
               children: [
-                // Circular Score
+                // Larger circular score
                 Stack(
                   alignment: Alignment.center,
                   children: [
                     SizedBox(
-                      width: 180,
-                      height: 180,
+                      width: 200,
+                      height: 200,
                       child: CircularProgressIndicator(
                         value: result.overallScore / 100,
-                        strokeWidth: 12,
+                        strokeWidth: 15,
                         backgroundColor: AppColors.primaryBg,
                         color: _getScoreColor(result.overallScore),
                       ),
@@ -175,38 +175,42 @@ class ATSScoreView extends StatelessWidget {
                           '${result.overallScore}',
                           style: TextStyle(
                             color: AppColors.black,
-                            fontSize: 48,
-                            fontWeight: FontWeight.w700,
+                            fontSize: 56,
+                            fontWeight: FontWeight.w800,
                           ),
                         ),
                         Text(
                           'out of 100',
                           style: TextStyle(
                             color: AppColors.textSecondary,
-                            fontSize: 14,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
                           ),
                         ),
                       ],
                     ),
                   ],
                 ),
-                const SizedBox(height: 24),
+                const SizedBox(height: 28),
 
-                // Score Label
+                // Score label with improved styling
                 Container(
                   padding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 8,
+                    horizontal: 20,
+                    vertical: 10,
                   ),
                   decoration: BoxDecoration(
-                    color: _getScoreColor(result.overallScore).withOpacity(0.2),
-                    borderRadius: BorderRadius.circular(30),
+                    color: _getScoreColor(
+                      result.overallScore,
+                    ).withOpacity(0.15),
+                    borderRadius: BorderRadius.circular(40),
                   ),
                   child: Text(
                     _getScoreLabel(result.overallScore),
                     style: TextStyle(
                       color: _getScoreColor(result.overallScore),
-                      fontWeight: FontWeight.w600,
+                      fontWeight: FontWeight.w700,
+                      fontSize: 18,
                     ),
                   ),
                 ),
@@ -238,7 +242,9 @@ class ATSScoreView extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 12),
-          ...result.strengths.map((s) => _buildBulletPoint(s, AppColors.success)),
+          ...result.strengths.map(
+            (s) => _buildBulletPoint(s, AppColors.success),
+          ),
           const SizedBox(height: 24),
 
           // Improvements
@@ -251,7 +257,9 @@ class ATSScoreView extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 12),
-          ...result.improvements.map((s) => _buildBulletPoint(s, AppColors.warning)),
+          ...result.improvements.map(
+            (s) => _buildBulletPoint(s, AppColors.warning),
+          ),
           const SizedBox(height: 24),
 
           // Summary
@@ -260,7 +268,7 @@ class ATSScoreView extends StatelessWidget {
             padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(
               color: AppColors.accent2,
-              borderRadius: BorderRadius.circular(16),
+              borderRadius: BorderRadius.circular(8),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -296,7 +304,7 @@ class ATSScoreView extends StatelessWidget {
                   style: OutlinedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(8),
                     ),
                     side: BorderSide(color: AppColors.accent1),
                   ),
@@ -317,7 +325,7 @@ class ATSScoreView extends StatelessWidget {
                     foregroundColor: AppColors.black,
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(8),
                     ),
                   ),
                   child: const Text('View Suggestions'),
@@ -337,7 +345,7 @@ class ATSScoreView extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: AppColors.primaryBg,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(8),
       ),
       child: Column(
         children: [
@@ -374,10 +382,7 @@ class ATSScoreView extends StatelessWidget {
           const SizedBox(height: 8),
           Text(
             category.feedback,
-            style: TextStyle(
-              color: AppColors.textSecondary,
-              fontSize: 13,
-            ),
+            style: TextStyle(color: AppColors.textSecondary, fontSize: 13),
           ),
         ],
       ),
@@ -394,18 +399,12 @@ class ATSScoreView extends StatelessWidget {
             margin: const EdgeInsets.only(top: 5, right: 12),
             width: 8,
             height: 8,
-            decoration: BoxDecoration(
-              color: color,
-              shape: BoxShape.circle,
-            ),
+            decoration: BoxDecoration(color: color, shape: BoxShape.circle),
           ),
           Expanded(
             child: Text(
               text,
-              style: TextStyle(
-                color: AppColors.textPrimary,
-                fontSize: 14,
-              ),
+              style: TextStyle(color: AppColors.textPrimary, fontSize: 14),
             ),
           ),
         ],
@@ -413,7 +412,7 @@ class ATSScoreView extends StatelessWidget {
     );
   }
 
-  Widget _buildError(String message) {
+  Widget _buildError(String message, BuildContext context) {
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(20),
@@ -445,24 +444,24 @@ class ATSScoreView extends StatelessWidget {
             Text(
               message,
               textAlign: TextAlign.center,
-              style: TextStyle(
-                color: AppColors.textSecondary,
-                fontSize: 14,
-              ),
+              style: TextStyle(color: AppColors.textSecondary, fontSize: 14),
             ),
             const SizedBox(height: 24),
-            // ElevatedButton(
-            //   onPressed: () => Navigator.pop(context),
-            //   style: ElevatedButton.styleFrom(
-            //     backgroundColor: AppColors.accent1,
-            //     foregroundColor: AppColors.black,
-            //     padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-            //     shape: RoundedRectangleBorder(
-            //       borderRadius: BorderRadius.circular(12),
-            //     ),
-            //   ),
-            //   child: const Text('Go Back'),
-            // ),
+            ElevatedButton(
+              onPressed: () => Navigator.pop(context),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.accent1,
+                foregroundColor: AppColors.black,
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 32,
+                  vertical: 16,
+                ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+              child: const Text('Go Back'),
+            ),
           ],
         ),
       ),
